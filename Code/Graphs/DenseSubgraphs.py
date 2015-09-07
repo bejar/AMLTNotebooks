@@ -27,7 +27,7 @@ from geojson import LineString, FeatureCollection, Feature
 import geojson
 
 
-fname = './Data/bcntwitter2.txt'
+fname = './Data/paristwitter.txt'
 
 
 rfile = open(fname, 'r')
@@ -42,7 +42,7 @@ for lines in rfile:
             if v1 != v2:
                 gr.add_edge(v1,v2)
 
-coord = (41.20, 41.65, 1.90, 2.40) #(51.23, 51.8, -0.5, 0.37)
+coord = (48.52, 49.05, 1.97, 2.68) #(51.23, 51.8, -0.5, 0.37) #(41.20, 41.65, 1.90, 2.40)
 
 
 # nx.draw_spring(gr)
@@ -54,7 +54,7 @@ a = nx.find_cliques(gr)
 
 m=0
 for c in a:
-    if len(c)>20:
+     if len(c)>10:
         print len(c)
         m += 1
         seq = []
@@ -74,14 +74,14 @@ for c in a:
                     lgeo.append(Feature(geometry=LineString([(y1, x1), (y2, x2)])))
         geoc = FeatureCollection(lgeo)
         dump = geojson.dumps(geoc)
-        jsfile = open('/home/bejar/tmp/Map' + str(m) + '.json', 'w')
+        jsfile = open('/home/bejar/tmp/Map' + str(m) + '-' + str(len(c)) + '.json', 'w')
         jsfile.write(dump)
         jsfile.close()
         mymap = folium.Map(location=[(coord[0] + coord[1]) / 2.0, (coord[2] + coord[3]) / 2.0], zoom_start=12, width=1200,
                            height=1000)
-        mymap.geo_json(geo_path='/home/bejar/tmp/Map' + str(m) + '.json', fill_color='Black', line_color='Black',
+        mymap.geo_json(geo_path='/home/bejar/tmp/Map' + str(m) + '-' + str(len(c)) + '.json', fill_color='Black', line_color='Black',
                        line_weight=2)
-        mymap.create_map(path='/home/bejar/tmp/Map' + str(m) + '.html')
+        mymap.create_map(path='/home/bejar/tmp/Map' + str(m) + '-' + str(len(c)) + '.html')
 
 # nx.draw_circular(a)
 # plt.show()
