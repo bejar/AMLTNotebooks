@@ -65,7 +65,7 @@ fdata = iso.fit_transform(blobs)
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 
-plt.scatter(fdata[:, 0], fdata[:, 1], zs= fdata[:, 2], c=labels, s=100)
+plt.scatter(fdata[:, 0], fdata[:, 1], zs=fdata[:, 2], c=labels, s=100)
 
 plt.show()
 
@@ -77,7 +77,7 @@ fig = plt.figure()
 fdata = lle.fit_transform(blobs)
 ax = fig.add_subplot(111, projection='3d')
 
-plt.scatter(fdata[:, 0], fdata[:, 1], zs= fdata[:, 2], c=labels, s=100)
+plt.scatter(fdata[:, 0], fdata[:, 1], zs=fdata[:, 2], c=labels, s=100)
 
 plt.show()
 
