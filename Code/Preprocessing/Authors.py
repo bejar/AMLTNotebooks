@@ -36,7 +36,7 @@ def show_figure(fdata, labels, ticks):
 
     plt.show()
 
-# Put the Data from the authors.zip in any directory and change the docpath variable adequately
+# Put the Data from authors.zip in any directory and change the docpath variable adequately
 # Use the Auth1 or the Auth2 datasets
 
 docpath = '/home/bejar/Data/AMLT/Auth1/'
