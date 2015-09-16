@@ -93,7 +93,7 @@ from sklearn.decomposition import SparsePCA
 
 spca = SparsePCA(n_components=3)
 fdata = spca.fit_transform(authors)
-show_figure(fdata, labels, ulabs)
+show_figure(fdata, labels, ulabs, 'PCA')
 
 # ISOMAP
 
