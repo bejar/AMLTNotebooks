@@ -27,8 +27,9 @@ from sklearn.decomposition import PCA
 from mpl_toolkits.mplot3d import Axes3D
 
 
-def show_figure(fdata, labels, ticks):
+def show_figure(fdata, labels, ticks, title=''):
     fig = plt.figure(figsize=(12,10))
+    fig.suptitle(title, fontsize=32)
     ax = fig.add_subplot(111, projection='3d')
     plt.scatter(fdata[:, 0], fdata[:, 1], zs=fdata[:, 2], depthshade=False, c=labels,s=100)
     cbar = plt.colorbar(ticks=range(len(ticks)))
@@ -39,7 +40,7 @@ def show_figure(fdata, labels, ticks):
 # Put the Data from authors.zip in any directory and change the docpath variable adequately
 # Use the Auth1 or the Auth2 datasets
 
-docpath = '/home/bejar/Data/AMLT/Auth1/'
+docpath = '/home/bejar/Data/authors/Auth1/'
 
 
 docs = sorted(listdir(docpath))[1:]
@@ -79,11 +80,11 @@ fdata = pca.fit_transform(authors)
 print(pca.explained_variance_ratio_)
 
 fig = plt.figure()
-
+fig.suptitle('PCA', fontsize=32)
 plt.plot(range(len(pca.explained_variance_ratio_)), pca.explained_variance_ratio_)
 plt.show()
 
-show_figure(fdata, labels, ulabs)
+show_figure(fdata, labels, ulabs, 'PCA')
 
 
 # Sparse PCA
@@ -101,7 +102,7 @@ from sklearn.manifold import Isomap
 iso = Isomap(n_components=3, n_neighbors=7)
 fdata = iso.fit_transform(authors)
 
-show_figure(fdata, labels, ulabs)
+show_figure(fdata, labels, ulabs, 'ISOMAP')
 
 # LLE
 print('LLE')
@@ -112,7 +113,7 @@ fdata = lle.fit_transform(authors)
 
 print(lle.reconstruction_error_)
 
-show_figure(fdata, labels, ulabs)
+show_figure(fdata, labels, ulabs, 'LLE')
 
 
 # MDS
@@ -122,7 +123,7 @@ mds = MDS(n_components=3)
 fdata = mds.fit_transform(authors)
 print (mds.stress_)
 
-show_figure(fdata, labels, ulabs)
+show_figure(fdata, labels, ulabs, 'MDS')
 
 
 # Spectral Embedding
@@ -132,7 +133,7 @@ from sklearn.manifold import SpectralEmbedding
 spec = SpectralEmbedding(n_components=3, affinity='nearest_neighbors', n_neighbors=15)
 fdata = spec.fit_transform(authors)
 
-show_figure(fdata, labels, ulabs)
+show_figure(fdata, labels, ulabs, 'Spec Emb')
 
 
 # Random Projection
@@ -142,7 +143,7 @@ print(johnson_lindenstrauss_min_dim(len(labels), eps=0.9))
 grp = GaussianRandomProjection(n_components=3)
 fdata = grp.fit_transform(authors)
 
-show_figure(fdata, labels, ulabs)
+show_figure(fdata, labels, ulabs, 'Random Proj')
 
 
 # NMF
@@ -154,5 +155,5 @@ nmf = ProjectedGradientNMF(n_components=3, sparseness='components' )
 fdata = nmf.fit_transform(authors)
 print(nmf.reconstruction_err_)
 
-show_figure(fdata, labels, ulabs)
+show_figure(fdata, labels, ulabs, 'NMF')
 

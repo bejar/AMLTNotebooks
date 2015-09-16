@@ -40,6 +40,7 @@ print('PCA')
 pca = PCA()
 fdata = pca.fit_transform(wheeldata1)
 fig = plt.figure(figsize=(30,10))
+fig.suptitle('PCA', fontsize=32)
 ax = fig.add_subplot(131, projection='3d')
 plt.scatter(fdata[:, 0], fdata[:, 1], zs=fdata[:, 2], depthshade=False, s=100)
 
@@ -62,6 +63,7 @@ iso = Isomap(n_neighbors=20, n_components=3)
 
 fdata = iso.fit_transform(wheeldata1)
 fig = plt.figure(figsize=(30,10))
+fig.suptitle('ISOMAP', fontsize=32)
 ax = fig.add_subplot(131, projection='3d')
 plt.scatter(fdata[:, 0], fdata[:, 1], zs=fdata[:, 2], depthshade=False, s=100)
 
@@ -82,6 +84,7 @@ lle = LocallyLinearEmbedding(n_neighbors=20, n_components=3, method='standard')
 
 fdata = lle.fit_transform(wheeldata1)
 fig = plt.figure(figsize=(30,10))
+fig.suptitle('LLE', fontsize=32)
 ax = fig.add_subplot(131, projection='3d')
 plt.scatter(fdata[:, 0], fdata[:, 1], zs=fdata[:, 2], depthshade=False, s=100)
 
@@ -102,6 +105,7 @@ from sklearn.manifold import SpectralEmbedding
 spec = SpectralEmbedding(n_components=3, affinity='nearest_neighbors', n_neighbors=30)
 fdata = spec.fit_transform(wheeldata1)
 fig = plt.figure(figsize=(30,10))
+fig.suptitle('Spec Emb', fontsize=32)
 ax = fig.add_subplot(131, projection='3d')
 plt.scatter(fdata[:, 0], fdata[:, 1], zs=fdata[:, 2], depthshade=False, s=100)
 
