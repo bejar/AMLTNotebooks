@@ -25,20 +25,57 @@ from scipy.cluster.hierarchy import linkage, dendrogram, fcluster
 from pylab import *
 import seaborn as sns
 import numpy as np
-
+from sklearn.metrics import adjusted_mutual_info_score
 
 iris = datasets.load_iris()
 
-# mdist = pairwise_distances(iris['data'])
-# md = np.tril(mdist)
+# Single Linkage
+
 clust = linkage(iris['data'], method='single')
-# print clust
-# dendrogram(clust)
-# plt.show()
-
+fig = plt.figure(figsize=(16,8))
+fig.add_subplot(121)
+dendrogram(clust)
 labels = fcluster(clust, 3, criterion='maxclust')
-
-print labels
-plt.figure(figsize=(10,10))
+print(adjusted_mutual_info_score(iris['target'], labels))
+fig.add_subplot(122)
 plt.scatter(iris['data'][:, 2], iris['data'][:, 1], c=labels,s=100)
 plt.show()
+
+# Complete Linkage
+
+clust = linkage(iris['data'], method='complete')
+fig = plt.figure(figsize=(16,8))
+fig.add_subplot(121)
+dendrogram(clust)
+labels = fcluster(clust, 3, criterion='maxclust')
+print(adjusted_mutual_info_score(iris['target'], labels))
+fig.add_subplot(122)
+plt.scatter(iris['data'][:, 2], iris['data'][:, 1], c=labels,s=100)
+plt.show()
+
+# Average criterion
+
+clust = linkage(iris['data'], method='average')
+fig = plt.figure(figsize=(16,8))
+fig.add_subplot(121)
+dendrogram(clust)
+labels = fcluster(clust, 3, criterion='maxclust')
+print(adjusted_mutual_info_score(iris['target'], labels))
+fig.add_subplot(122)
+plt.scatter(iris['data'][:, 2], iris['data'][:, 1], c=labels,s=100)
+plt.show()
+
+# Ward criterion
+
+clust = linkage(iris['data'], method='ward')
+fig = plt.figure(figsize=(16,8))
+fig.add_subplot(121)
+dendrogram(clust)
+labels = fcluster(clust, 3, criterion='maxclust')
+print(adjusted_mutual_info_score(iris['target'], labels))
+fig.add_subplot(122)
+plt.scatter(iris['data'][:, 2], iris['data'][:, 1], c=labels,s=100)
+plt.show()
+
+
+
