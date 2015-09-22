@@ -33,7 +33,7 @@ digits = load_digits()
 pca = PCA()
 fdata = pca.fit_transform(digits['data'])
 
-print pca.explained_variance_ratio_
+print(pca.explained_variance_ratio_)
 
 fig = plt.figure()
 
