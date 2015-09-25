@@ -27,7 +27,7 @@ from pylab import *
 import seaborn as sns
 import numpy as np
 from sklearn.metrics import adjusted_mutual_info_score
-from sklearn.cluster import KMeans
+from sklearn.cluster import KMeans, SpectralClustering, AffinityPropagation
 from sklearn.mixture import GMM
 from sklearn.decomposition import PCA
 from mpl_toolkits.mplot3d import Axes3D
@@ -82,21 +82,25 @@ def authors_data(method=1, nfeatures=100):
 
 nfeatures = 1500
 method = 2
+nclusters = 2
 
 authors, alabels = authors_data(method, nfeatures)
 
 pca = PCA()
 fdata = pca.fit_transform(authors)
 
-km = KMeans(n_clusters=2, n_init=10, random_state=0)
+
+# KMeans
+km = KMeans(n_clusters=nclusters, n_init=10, random_state=0)
 labels = km.fit_predict(authors)
 
 print(adjusted_mutual_info_score(alabels, labels))
 
 show_figure(fdata, alabels, labels, '')
 
+# GMM
 # covariance_type = ‘spherical’, ‘tied’, ‘diag’, ‘full’
-gmm = GMM(n_components=2, covariance_type='full', random_state=0)
+gmm = GMM(n_components=nclusters, covariance_type='full', random_state=0)
 gmm.fit(authors)
 
 labels = gmm.predict(authors)
@@ -105,5 +109,12 @@ print(adjusted_mutual_info_score(alabels, labels))
 
 show_figure(fdata, alabels, labels, '')
 
+# Spectral Clustering
+spec = SpectralClustering(n_clusters=nclusters, affinity='nearest_neighbors', n_neighbors=50, random_state=0)
+labels = spec.fit_predict(authors)
+
+print(adjusted_mutual_info_score(alabels, labels))
+
+show_figure(fdata, alabels, labels, '')
 
 
