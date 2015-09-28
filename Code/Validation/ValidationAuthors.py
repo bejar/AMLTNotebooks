@@ -22,6 +22,7 @@ __author__ = 'bejar'
 from os import listdir
 from os.path import join
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from scipy.cluster.hierarchy import linkage, dendrogram, fcluster
 from pylab import *
 import seaborn as sns
 import numpy as np
@@ -30,6 +31,7 @@ from sklearn.cluster import KMeans, SpectralClustering, AffinityPropagation
 from sklearn.mixture import GMM
 from sklearn.decomposition import PCA
 from mpl_toolkits.mplot3d import Axes3D
+from amltlearn.metrics.cluster import calinski_harabasz_score, davies_bouldin_score
 
 docpath = '/home/bejar/Data/authors/Auth1/'
 
@@ -68,8 +70,6 @@ def authors_data(method=1, nfeatures=100):
 
     pdocs = [join(docpath, f) for f in docs]
 
-
-
     if method == 1: # Features are word counts
         cvec = CountVectorizer(input='filename', stop_words='english', max_features=nfeatures)
     elif method == 2: # Features are TF-IDF
@@ -81,7 +81,7 @@ def authors_data(method=1, nfeatures=100):
 
 nfeatures = 1500
 method = 2
-nclusters = 2
+nclusters = 10
 
 authors, alabels = authors_data(method, nfeatures)
 
@@ -90,30 +90,84 @@ fdata = pca.fit_transform(authors)
 
 
 # KMeans
-km = KMeans(n_clusters=nclusters, n_init=10, random_state=0)
-labels = km.fit_predict(authors)
 
-print(adjusted_mutual_info_score(alabels, labels))
+lscores = []
+for nc in range(2,nclusters+1):
+    km = KMeans(n_clusters=nc, n_init=10, random_state=0)
+    labels = km.fit_predict(authors)
+    lscores.append((
+        silhouette_score(authors, labels),
+        calinski_harabasz_score(authors, labels),
+        davies_bouldin_score(authors, labels)))
 
-show_figure(fdata, alabels, labels, '')
+fig = plt.figure()
+ax = fig.add_subplot(131)
+plt.plot(range(2,nclusters+1), [x for x,_,_ in lscores])
+ax = fig.add_subplot(132)
+plt.plot(range(2,nclusters+1), [x for _, x,_ in lscores])
+ax = fig.add_subplot(133)
+plt.plot(range(2,nclusters+1), [x for _, _, x in lscores])
+
+plt.show()
+
+
+
+# print(adjusted_mutual_info_score(alabels, labels))
+#
+# show_figure(fdata, alabels, labels, '')
 
 # GMM
 # covariance_type = ‘spherical’, ‘tied’, ‘diag’, ‘full’
-gmm = GMM(n_components=nclusters, covariance_type='diag', random_state=0)
-gmm.fit(authors)
 
-labels = gmm.predict(authors)
+lscores = []
+for nc in range(2,nclusters+1):
+    gmm = GMM(n_components=nc, covariance_type='diag', random_state=0)
+    gmm.fit(authors)
+    labels = gmm.predict(authors)
+    lscores.append((
+        silhouette_score(authors, labels),
+        calinski_harabasz_score(authors, labels),
+        davies_bouldin_score(authors, labels)))
 
-print(adjusted_mutual_info_score(alabels, labels))
+fig = plt.figure()
+ax = fig.add_subplot(131)
+plt.plot(range(2,nclusters+1), [x for x,_,_ in lscores])
+ax = fig.add_subplot(132)
+plt.plot(range(2,nclusters+1), [x for _, x,_ in lscores])
+ax = fig.add_subplot(133)
+plt.plot(range(2,nclusters+1), [x for _, _, x in lscores])
 
-show_figure(fdata, alabels, labels, '')
+plt.show()
 
-# Spectral Clustering
-spec = SpectralClustering(n_clusters=nclusters, affinity='nearest_neighbors', n_neighbors=15, random_state=0)
-labels = spec.fit_predict(authors)
 
-print(adjusted_mutual_info_score(alabels, labels))
+# print(adjusted_mutual_info_score(alabels, labels))
+#
+# show_figure(fdata, alabels, labels, '')
+#
 
-show_figure(fdata, alabels, labels, '')
+
+# # Spectral Clustering
+lscores = []
+for nc in range(2,nclusters+1):
+    spec = SpectralClustering(n_clusters=nc, affinity='nearest_neighbors', n_neighbors=15, random_state=0)
+    labels = spec.fit_predict(authors)
+    lscores.append((
+        silhouette_score(authors, labels),
+        calinski_harabasz_score(authors, labels),
+        davies_bouldin_score(authors, labels)))
+
+fig = plt.figure()
+ax = fig.add_subplot(131)
+plt.plot(range(2,nclusters+1), [x for x,_,_ in lscores])
+ax = fig.add_subplot(132)
+plt.plot(range(2,nclusters+1), [x for _, x,_ in lscores])
+ax = fig.add_subplot(133)
+plt.plot(range(2,nclusters+1), [x for _, _, x in lscores])
+
+plt.show()
+
+# print(adjusted_mutual_info_score(alabels, labels))
+#
+# show_figure(fdata, alabels, labels, '')
 
 
