@@ -47,18 +47,12 @@ km = KMeans(n_clusters=30)
 
 labels = km.fit_predict(citypos)
 print(len(np.unique(labels)))
-ecolors = []
-for v in labels:
-    if v!= -1:
-        ecolors.append(colors[v%len(colors)])
-    else:
-        ecolors.append('k')
 
 
 fig = plt.figure(figsize=(20,20))
 
 ax = fig.add_subplot(221)
-ax.scatter(citypos[:, 1], citypos[:, 0], c=ecolors, s=2, marker='+')
+ax.scatter(citypos[:, 1], citypos[:, 0], c=labels/len(np.unique(labels))*1.0, s=2, marker='+')
 
 
 # GMM
@@ -66,18 +60,10 @@ gmm = GMM(n_components=30, covariance_type='diag')
 gmm.fit(citypos)
 
 labels = gmm.predict(citypos)
-
 print(len(np.unique(labels)))
-ecolors = []
-for v in labels:
-    if v!= -1:
-        ecolors.append(colors[v%len(colors)])
-    else:
-        ecolors.append('k')
-
 
 ax = fig.add_subplot(222)
-ax.scatter(citypos[:, 1], citypos[:, 0], c=ecolors, s=2, marker='+')
+ax.scatter(citypos[:, 1], citypos[:, 0], c=labels/len(np.unique(labels))*1.0, s=2, marker='+')
 
 # Leader
 from amltlearn.cluster import Leader
@@ -86,35 +72,20 @@ lead = Leader(radius=0.04)
 
 lead.fit(citypos)
 labels = lead.predict(citypos)
-
 print(len(np.unique(labels)))
-ecolors = []
-for v in labels:
-    if v!= -1:
-        ecolors.append(colors[v%len(colors)])
-    else:
-        ecolors.append('k')
-
 
 ax = fig.add_subplot(223)
-ax.scatter(citypos[:, 1], citypos[:, 0], c=ecolors, s=2, marker='+')
-
+ax.scatter(citypos[:, 1], citypos[:, 0], c=np.array(labels)/len(np.unique(labels))*1.0, s=2, marker='+')
 
 
 # Adjusting DBSCAN parameters is tricky
-dbs = DBSCAN(eps=0.005, min_samples=25)
+dbs = DBSCAN(eps=0.005, min_samples=75)
 labels = dbs.fit_predict(citypos)
 print(len(np.unique(labels)))
-ecolors = []
-for v in labels:
-    if v!= -1:
-        ecolors.append(colors[v%len(colors)])
-    else:
-        ecolors.append('k')
-
+labels[labels == -1] += len(np.unique(labels))+10
 
 ax = fig.add_subplot(224)
-ax.scatter(citypos[:, 1], citypos[:, 0], c=ecolors, s=2, marker='+')
+ax.scatter(citypos[:, 1], citypos[:, 0], c=(labels+1)/len(np.unique(labels))*1.0, s=2, marker='+')
 
 
 plt.show()
