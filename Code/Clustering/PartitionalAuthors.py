@@ -34,14 +34,16 @@ from mpl_toolkits.mplot3d import Axes3D
 docpath = '/home/bejar/Data/authors/Auth1/'
 
 
-def show_figure(fdata, labels1, labels2, title=''):
+def show_figure(fdata, labels1, labels2, title='', subtitle=['','']):
     fig = plt.figure(figsize=(12,10))
     fig.suptitle(title, fontsize=32)
     ax = fig.add_subplot(121, projection='3d')
+    ax.set_title(subtitle[0])
     plt.scatter(fdata[:, 0], fdata[:, 1], zs=fdata[:, 2], depthshade=False, c=labels1,s=100)
     # cbar = plt.colorbar(ticks=range(len(ticks)))
     # cbar.ax.set_yticklabels(ticks)
     ax = fig.add_subplot(122, projection='3d')
+    ax.set_title(subtitle[1])
     plt.scatter(fdata[:, 0], fdata[:, 1], zs=fdata[:, 2], depthshade=False, c=labels2,s=100)
 
     plt.show()
@@ -95,7 +97,7 @@ labels = km.fit_predict(authors)
 
 print(adjusted_mutual_info_score(alabels, labels))
 
-show_figure(fdata, alabels, labels, '')
+show_figure(fdata, alabels, labels, subtitle=['Orig','K-Means'])
 
 # GMM
 # covariance_type = ‘spherical’, ‘tied’, ‘diag’, ‘full’
@@ -106,7 +108,7 @@ labels = gmm.predict(authors)
 
 print(adjusted_mutual_info_score(alabels, labels))
 
-show_figure(fdata, alabels, labels, '')
+show_figure(fdata, alabels, labels, subtitle=['Orig','GMM'])
 
 # Spectral Clustering
 spec = SpectralClustering(n_clusters=nclusters, affinity='nearest_neighbors', n_neighbors=15, random_state=0)
@@ -114,6 +116,6 @@ labels = spec.fit_predict(authors)
 
 print(adjusted_mutual_info_score(alabels, labels))
 
-show_figure(fdata, alabels, labels, '')
+show_figure(fdata, alabels, labels, subtitle=['Orig','Spectral'])
 
 

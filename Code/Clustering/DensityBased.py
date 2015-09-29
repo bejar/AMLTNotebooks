@@ -32,7 +32,7 @@ colors = 'rgbymc'
 citypath = '/home/bejar/Data/City/'
 
 # Data from the City dataset (BCNpos, PARpos, LONpos)
-data = 'PARpos.csv'
+data = 'LONpos.csv'
 
 citypos = loadtxt(citypath+data, delimiter=',')
 
@@ -51,7 +51,9 @@ print(len(np.unique(labels)))
 
 fig = plt.figure(figsize=(20,20))
 
+
 ax = fig.add_subplot(221)
+ax.set_title('K-Means')
 ax.scatter(citypos[:, 1], citypos[:, 0], c=labels/len(np.unique(labels))*1.0, s=2, marker='+')
 
 
@@ -63,6 +65,8 @@ labels = gmm.predict(citypos)
 print(len(np.unique(labels)))
 
 ax = fig.add_subplot(222)
+ax.set_title('GMM')
+
 ax.scatter(citypos[:, 1], citypos[:, 0], c=labels/len(np.unique(labels))*1.0, s=2, marker='+')
 
 # Leader
@@ -75,6 +79,7 @@ labels = lead.predict(citypos)
 print(len(np.unique(labels)))
 
 ax = fig.add_subplot(223)
+ax.set_title('Leader')
 ax.scatter(citypos[:, 1], citypos[:, 0], c=np.array(labels)/len(np.unique(labels))*1.0, s=2, marker='+')
 
 
@@ -85,6 +90,7 @@ print(len(np.unique(labels)))
 labels[labels == -1] += len(np.unique(labels))+10
 
 ax = fig.add_subplot(224)
+ax.set_title('DBSCAN')
 ax.scatter(citypos[:, 1], citypos[:, 0], c=(labels+1)/len(np.unique(labels))*1.0, s=2, marker='+')
 
 

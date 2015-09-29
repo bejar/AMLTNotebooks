@@ -25,7 +25,7 @@ from sklearn import datasets
 
 iris = datasets.load_iris()
 
-nsom = som(5,5)
+nsom = som(2,3)
 
 nsom.train(iris['data'][:,:3], epochs=200)
 
