@@ -100,7 +100,7 @@ print(adjusted_mutual_info_score(alabels, labels))
 show_figure(fdata, alabels, labels, subtitle=['Orig','K-Means'])
 
 # GMM
-# covariance_type = ‘spherical’, ‘tied’, ‘diag’, ‘full’
+# covariance_type = spherical, tied, diag, full
 gmm = GMM(n_components=nclusters, covariance_type='diag', random_state=0)
 gmm.fit(authors)
 
@@ -117,5 +117,4 @@ labels = spec.fit_predict(authors)
 print(adjusted_mutual_info_score(alabels, labels))
 
 show_figure(fdata, alabels, labels, subtitle=['Orig','Spectral'])
-
 

@@ -32,7 +32,7 @@ colors = 'rgbymc'
 citypath = '/home/bejar/Data/City/'
 
 # Data from the City dataset (BCNpos, PARpos, LONpos)
-data = 'LONpos.csv'
+data = 'LONpublorder.csv'
 
 citypos = loadtxt(citypath+data, delimiter=',')
 
@@ -84,7 +84,7 @@ ax.scatter(citypos[:, 1], citypos[:, 0], c=np.array(labels)/len(np.unique(labels
 
 
 # Adjusting DBSCAN parameters is tricky
-dbs = DBSCAN(eps=0.005, min_samples=75)
+dbs = DBSCAN(eps=0.005, min_samples=5)
 labels = dbs.fit_predict(citypos)
 print(len(np.unique(labels)))
 labels[labels == -1] += len(np.unique(labels))+10
