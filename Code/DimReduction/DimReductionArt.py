@@ -41,7 +41,7 @@ plt.show()
 pca = PCA()
 fdata = pca.fit_transform(blobs)
 
-print pca.explained_variance_ratio_
+print(pca.explained_variance_ratio_)
 
 fig = plt.figure()
 
