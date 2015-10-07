@@ -32,7 +32,7 @@ colors = 'rgbymc'
 citypath = '/home/bejar/Data/City/'
 
 # Data from the City dataset (BCNpos, PARpos, LONpos)
-data = 'LONpublorder.csv'
+data = 'LONcrime.csv'
 
 citypos = loadtxt(citypath+data, delimiter=',')
 
