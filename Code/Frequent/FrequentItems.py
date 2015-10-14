@@ -22,6 +22,9 @@ __author__ = 'bejar'
 from fim import apriori, eclat, fpgrowth, fim
 
 
+
+
+
 tracts = [ [ 1, 2, 3 ],
            [ 1, 4, 5 ],
            [ 2, 3, 4 ],
@@ -36,14 +39,21 @@ tracts = [ [ 1, 2, 3 ],
 print('transactions:')
 for t in tracts: print(t)
 
-print  ('apriori(tracts, supp=-3, zmin=2):')
-for r in apriori(tracts, supp=-3, zmin=2): print r
+#/*--------------------------------------------------------------------*/
+#/* apriori (tracts, target='s', supp=10, conf=80, zmin=1, zmax=None,  */
+#/*          report='a', eval='x', agg='x', thresh=10, prune=None,     */
+#/*          algo='', mode='', border=None, appear=None)               */
+#/*--------------------------------------------------------------------*/
 
-print  ('eclat(tracts, supp=-3, zmin=2):')
-for r in eclat(tracts, supp=-3, zmin=2): print r
+print  ('apriori(tracts, supp=-3, zmin=2):')
+for r in apriori(tracts, target='r', supp=-3, zmin=2, report='asicC'): print(r)
+
+
+#/*--------------------------------------------------------------------*/
+#/* fpgrowth (tracts, target='s', supp=10, conf=80, zmin=1, zmax=None, */
+#/*           report='a', eval='x', agg='x', thresh=10, prune=None,    */
+#/*           algo='s', mode='', border=None, appear=None)             */
+#/*--------------------------------------------------------------------*/
 
 print  ('fpgrowth(tracts, supp=-3, zmin=2):')
-for r in fpgrowth(tracts, supp=-3, zmin=2,): print r
-
-print  ('fim(tracts, supp=-3, zmin=2, report=\'#\'):')
-for r in fim(tracts, supp=-3, zmin=2, report='#'): print r
+for r in fpgrowth(tracts, target='r', supp=-3, zmin=2, report='asicC'): print(r)
