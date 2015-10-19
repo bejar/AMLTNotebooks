@@ -27,7 +27,7 @@ from geojson import LineString, FeatureCollection, Feature
 import geojson
 
 
-fname = './Data/paristwitter.txt'
+fname = '/home/bejat/Data/City/londontwitter.txt'
 
 
 rfile = open(fname, 'r')
@@ -36,13 +36,13 @@ gr = nx.Graph()
 
 for lines in rfile:
     vals = lines.replace('[', '').replace(']','').replace('\n','').replace('\'','').replace(' ','').split(',')
-    #print vals
+    print(vals)
     for v1 in vals:
         for v2 in vals:
             if v1 != v2:
                 gr.add_edge(v1,v2)
 
-coord = (48.52, 49.05, 1.97, 2.68) #(51.23, 51.8, -0.5, 0.37) #(41.20, 41.65, 1.90, 2.40)
+coord = (51.23, 51.8, -0.5, 0.37) #(48.52, 49.05, 1.97, 2.68) #(41.20, 41.65, 1.90, 2.40)
 
 
 # nx.draw_spring(gr)
@@ -54,8 +54,8 @@ a = nx.find_cliques(gr)
 
 m=0
 for c in a:
-     if len(c)>10:
-        print len(c)
+     if len(c) > 5:
+        print(len(c))
         m += 1
         seq = []
         for i in c:
