@@ -19,6 +19,7 @@ HierarchicalAuthors
 
 __author__ = 'bejar'
 
+import matplotlib.pyplot as plt
 from os import listdir
 from os.path import join
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer

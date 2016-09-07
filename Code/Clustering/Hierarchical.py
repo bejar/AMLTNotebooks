@@ -19,6 +19,7 @@ Hierarchical
 
 __author__ = 'bejar'
 
+import matplotlib.pyplot as plt
 from sklearn import datasets
 from sklearn.metrics import pairwise_distances
 from scipy.cluster.hierarchy import linkage, dendrogram, fcluster

@@ -18,6 +18,8 @@ image
 """
 
 __author__ = 'bejar'
+
+import matplotlib.pyplot as plt
 from sklearn.datasets import load_sample_image
 
 from sklearn.cluster import DBSCAN, KMeans
