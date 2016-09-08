@@ -4,7 +4,7 @@
 DensityBased
 *************
 
-:Description: DensityBased
+:Description: Different clustering algorithm applied
 
     
 
@@ -33,7 +33,7 @@ colors = 'rgbymc'
 
 citypath = '/home/bejar/Data/City/'
 
-# Data from the City dataset (BCNpos, PARpos, LONpos)
+# Data from the City dataset (use any of the csv files in the directory)
 data = 'BCNpos3.csv'
 
 citypos = loadtxt(citypath+data, delimiter=',')
@@ -60,21 +60,9 @@ ax.set_title('BCN K-Means')
 ax.scatter(citypos[:, 1], citypos[:, 0], c=labels/len(np.unique(labels))*1.0, s=2, marker='+')
 plt.show()
 
-# GMM
-# gmm = GMM(n_components=30, covariance_type='diag')
-# gmm.fit(citypos)
-#
-# labels = gmm.predict(citypos)
-# print(len(np.unique(labels)))
-#
-# ax = fig.add_subplot(222)
-# ax.set_title('GMM')
-#
-# ax.scatter(citypos[:, 1], citypos[:, 0], c=labels/len(np.unique(labels))*1.0, s=2, marker='+')
-#plt.show()
 
 #Leader
-from kemlglearn.cluster import Leader
+from amltlearn.cluster import Leader
 
 lead = Leader(radius=0.004)
 itime = time.perf_counter()

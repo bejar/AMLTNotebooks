@@ -6,7 +6,7 @@ Authors
 
 :Description: Authors
 
-    
+    Dimensionality reduction for the Authors datasets
 
 :Authors: bejar
     
@@ -25,7 +25,7 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from pylab import *
 from sklearn.decomposition import PCA
 from mpl_toolkits.mplot3d import Axes3D
-
+import matplotlib.pyplot as plt
 
 def show_figure(fdata, labels, ticks, title=''):
     fig = plt.figure(figsize=(12,10))
@@ -46,7 +46,7 @@ docpath = '/home/bejar/Data/authors/Auth1/'
 docs = sorted(listdir(docpath))[1:]
 
 
-# use v[:2] for dataset labels, use [2:-2] for individual authors
+# use v[:2] for dataset labels, use [2:-2] for individual authors as labels
 labs = [v[:2] for v in docs]
 ulabs = sorted(list(set(labs)))
 dlabs = {}
@@ -149,9 +149,9 @@ show_figure(fdata, labels, ulabs, 'Random Proj')
 # NMF
 
 print ('Non Negative Matric Factorization')
-from sklearn.decomposition import ProjectedGradientNMF
+from sklearn.decomposition import NMF
 
-nmf = ProjectedGradientNMF(n_components=3, sparseness='components' )
+nmf = NMF(n_components=3, sparseness='components', solver='cd')
 fdata = nmf.fit_transform(authors)
 print(nmf.reconstruction_err_)
 

@@ -32,6 +32,7 @@ from sklearn.mixture import GMM
 from sklearn.decomposition import PCA
 from mpl_toolkits.mplot3d import Axes3D
 from amltlearn.metrics.cluster import calinski_harabasz_score, davies_bouldin_score
+import matplotlib.pyplot as plt
 
 docpath = '/home/bejar/Data/authors/Auth1/'
 
