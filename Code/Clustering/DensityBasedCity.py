@@ -4,7 +4,7 @@
 DensityBased
 *************
 
-:Description: Different clustering algorithm applied
+:Description: Different clustering algorithm applied to spatial data
 
     
 
@@ -56,7 +56,7 @@ print(len(np.unique(labels)))
 
 
 ax = fig.add_subplot(111)
-ax.set_title('BCN K-Means')
+ax.set_title('K-Means')
 ax.scatter(citypos[:, 1], citypos[:, 0], c=labels/len(np.unique(labels))*1.0, s=2, marker='+')
 plt.show()
 
@@ -74,7 +74,7 @@ print(len(np.unique(labels)))
 fig = plt.figure(figsize=(10,10))
 
 ax = fig.add_subplot(111)
-ax.set_title('BCN Leader')
+ax.set_title('Leader')
 ax.scatter(citypos[:, 1], citypos[:, 0], c=np.array(labels)/len(np.unique(labels))*1.0, s=2, marker='+')
 plt.show()
 
@@ -90,11 +90,12 @@ labels[labels == -1] += len(np.unique(labels))+10
 fig = plt.figure(figsize=(10,10))
 
 ax = fig.add_subplot(111)
-ax.set_title('BCN DBSCAN')
+ax.set_title('DBSCAN')
 ax.scatter(citypos[:, 1], citypos[:, 0], c=(labels+1)/len(np.unique(labels))*1.0, s=2, marker='+')
 
 plt.show()
 
+# BIRCH algorithm
 from sklearn.cluster import Birch
 
 birch = Birch(threshold=0.002, n_clusters=800, branching_factor=50)
@@ -109,7 +110,7 @@ labels[labels == -1] += len(np.unique(labels))+10
 fig = plt.figure(figsize=(10,10))
 
 ax = fig.add_subplot(111)
-ax.set_title('BCN BIRCH')
+ax.set_title('BIRCH')
 ax.scatter(citypos[:, 1], citypos[:, 0], c=(labels+1)/len(np.unique(labels))*1.0, s=2, marker='+')
 
 plt.show()
