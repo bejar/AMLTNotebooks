@@ -66,12 +66,53 @@ def authors_data(method=1, nfeatures=100):
     return cvec.fit_transform(pdocs).toarray(), labels
 
 nfeatures = 1500
-method = 2
+method = 3
 
 authors, alabels = authors_data(method, nfeatures)
 
+
+### Ward
 clust = linkage(authors, method='ward')
 fig = plt.figure(figsize=(8,8))
+fig.suptitle('Ward', fontsize=32)
+dendrogram(clust)
+plt.show()
+labels = fcluster(clust, 2, criterion='maxclust')
+print(adjusted_mutual_info_score(alabels, labels))
+
+
+### Single
+clust = linkage(authors, method='single')
+fig = plt.figure(figsize=(8,8))
+fig.suptitle('Single Link', fontsize=32)
+dendrogram(clust)
+plt.show()
+labels = fcluster(clust, 2, criterion='maxclust')
+print(adjusted_mutual_info_score(alabels, labels))
+
+### Complete
+clust = linkage(authors, method='complete')
+fig = plt.figure(figsize=(8,8))
+fig.suptitle('Complete Link', fontsize=32)
+dendrogram(clust)
+plt.show()
+labels = fcluster(clust, 2, criterion='maxclust')
+print(adjusted_mutual_info_score(alabels, labels))
+
+### Average
+clust = linkage(authors, method='average')
+fig = plt.figure(figsize=(8,8))
+fig.suptitle('Average', fontsize=32)
+dendrogram(clust)
+plt.show()
+labels = fcluster(clust, 2, criterion='maxclust')
+print(adjusted_mutual_info_score(alabels, labels))
+
+
+### Centroid
+clust = linkage(authors, method='centroid')
+fig = plt.figure(figsize=(8,8))
+fig.suptitle('Centroid', fontsize=32)
 dendrogram(clust)
 plt.show()
 labels = fcluster(clust, 2, criterion='maxclust')
