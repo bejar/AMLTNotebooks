@@ -40,7 +40,7 @@ def show_figure(fdata, labels, ticks, title=''):
 # Put the Data from authors.zip in any directory and change the docpath variable adequately
 # Use the Auth1 or the Auth2 datasets
 
-docpath = '/home/bejar/Data/authors/Auth1/'
+docpath = '/home/bejar/Data/authors/Auth2/'
 
 
 docs = sorted(listdir(docpath))[1:]
@@ -56,8 +56,8 @@ labels = [dlabs[v] for v in labs]
 
 pdocs = [join(docpath, f) for f in docs]
 
-nfeatures = 100
-method = 1
+nfeatures = 300
+method = 2
 
 if method == 1: # Features are word counts
     cvec = CountVectorizer(input='filename', stop_words='english', max_features=nfeatures)
@@ -70,7 +70,6 @@ authors = cvec.fit_transform(pdocs)
 authors = authors.toarray()
 
 # print(cvec.vocabulary_)
-
 
 # PCA
 print ('PCA')
@@ -156,4 +155,6 @@ fdata = nmf.fit_transform(authors)
 print(nmf.reconstruction_err_)
 
 show_figure(fdata, labels, ulabs, 'NMF')
+
+
 
